@@ -1,0 +1,41 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.log
+.cache/
+.mypy_cache/
+.pytest_cache/
+
+# Node/React
+frontend/node_modules/
+frontend/build/
+frontend/.cache/
+frontend/*.log
+frontend/.eslintcache
+
+# Build/Dist
+dist/
+build/
+build/hackathon-app/
+dist/hackathon-app/
+
+# App data / local DB / vectors / logs
+src/auth_users.db
+src/chroma_db/
+src/logs/
+src/token/*.txt
+
+# Mapping (保留 CSV，忽略私有/大型二进制)
+mapping/*.xlsx
+
+# Env
+.env
+frontend/.env

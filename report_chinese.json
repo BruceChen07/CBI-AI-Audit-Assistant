@@ -1,0 +1,1189 @@
+{
+  "root": "D:\\Workspace\\hackathon",
+  "total_files_scanned": 74,
+  "total_files_with_hits": 30,
+  "total_hits": 198,
+  "summary_by_ext": {
+    ".css": 20,
+    ".js": 117,
+    ".md": 27,
+    ".py": 34
+  },
+  "summary_by_dir": {
+    ".": 27,
+    "frontend": 137,
+    "src": 34
+  },
+  "entries": [
+    {
+      "file": "D:\\Workspace\\hackathon\\SMOKE_TEST.md",
+      "hits": [
+        {
+          "line": 1,
+          "col": 3,
+          "snippet": "# «后»«端»«冒»«烟»«测»«试»«与»«部»«署»«要»«点»«（»Windows«）»"
+        },
+        {
+          "line": 3,
+          "col": 4,
+          "snippet": "## «环»«境»«准»«备»"
+        },
+        {
+          "line": 4,
+          "col": 15,
+          "snippet": "- Python 3.10+«（»«建»«议»«与»«项»«目»«的» .venv «对»«齐»«）»"
+        },
+        {
+          "line": 5,
+          "col": 11,
+          "snippet": "- Windows «终»«端»«：»cmd.exe"
+        },
+        {
+          "line": 6,
+          "col": 3,
+          "snippet": "- «可»«选»«：»«项»«目»«自»«带»«虚»«拟»«环»«境» .venv «或» test_env"
+        },
+        {
+          "line": 8,
+          "col": 4,
+          "snippet": "## «关»«键»«环»«境»«变»«量»"
+        },
+        {
+          "line": 9,
+          "col": 11,
+          "snippet": "- API_BASE«：»«后»«端» API «根»«地»«址»«（»«默»«认» http://localhost:8000«）»"
+        },
+        {
+          "line": 10,
+          "col": 34,
+          "snippet": "- ADMIN_USERNAME / ADMIN_PASSWORD«：»«管»«理»«员»«账»«号»«；»«需»«与»«后»«端»«启»«动»«时»«的»«环»«境»«变»«量»«一»«致»«（»«后»«端»«会»«按»«这»«两»«个»«变»«量»«在» SQLite «中»«创»«建»«初»«始»«管»«理»«员»«）»"
+        },
+        {
+          "line": 12,
+          "col": 3,
+          "snippet": "> «后»«端»«会»«在»«启»«动»«时»«读»«取» ADMIN_USERNAME/ADMIN_PASSWORD «创»«建»«初»«始»«管»«理»«员»«。»«若»«未»«设»«置»«，»«登»«录»«接»«口»«将»«无»«法»«用»«默»«认»«值»«通»«过»«。»"
+        },
+        {
+          "line": 14,
+          "col": 4,
+          "snippet": "## «启»«动»«后»«端»"
+        },
+        {
+          "line": 15,
+          "col": 3,
+          "snippet": "- «推»«荐»«使»«用»«项»«目»«根»«目»«录»«的» start_services.bat«（»«如»«存»«在»«）»«启»«动»«后»«端»"
+        },
+        {
+          "line": 16,
+          "col": 3,
+          "snippet": "- «或»«手»«动»«启»«动»«（»«示»«例»«）»«：»"
+        },
+        {
+          "line": 17,
+          "col": 6,
+          "snippet": "  1. «激»«活»«虚»«拟»«环»«境»«（»«任»«选»«其»«一»«）»"
+        },
+        {
+          "line": 20,
+          "col": 6,
+          "snippet": "  2. «安»«装»«依»«赖»"
+        },
+        {
+          "line": 22,
+          "col": 6,
+          "snippet": "  3. «设»«置»«环»«境»«变»«量»«（»«示»«例»«）»"
+        },
+        {
+          "line": 25,
+          "col": 6,
+          "snippet": "  4. «启»«动»«服»«务»«（»«示»«例»«）»"
+        },
+        {
+          "line": 28,
+          "col": 4,
+          "snippet": "## «运»«行»«冒»«烟»«测»«试»"
+        },
+        {
+          "line": 29,
+          "col": 3,
+          "snippet": "- «直»«接»«双»«击» run_smoke_test.bat«，»«或»«在» cmd «中»«执»«行»«：»"
+        },
+        {
+          "line": 31,
+          "col": 3,
+          "snippet": "- «脚»«本»«会»«：»"
+        },
+        {
+          "line": 32,
+          "col": 6,
+          "snippet": "  1. «自»«动»«选»«择» Python «解»«释»«器»«（»«优»«先» .venv«，»«其»«次» test_env«，»«最»«后»«系»«统» python«）»"
+        },
+        {
+          "line": 33,
+          "col": 6,
+          "snippet": "  2. «自»«动»«安»«装» requests«（»«若»«缺»«失»«）»"
+        },
+        {
+          "line": 34,
+          "col": 6,
+          "snippet": "  3. «探»«测» API «健»«康»«检»«查»«（»/test/«）»«，»«若»«不»«通»«尝»«试»«调»«用» start_services.bat «并»«轮»«询»«等»«待»"
+        },
+        {
+          "line": 35,
+          "col": 6,
+          "snippet": "  4. «执»«行» test/smoke_api.py«：»"
+        },
+        {
+          "line": 41,
+          "col": 4,
+          "snippet": "## «常»«见»«问»«题»"
+        },
+        {
+          "line": 42,
+          "col": 3,
+          "snippet": "- «登»«录»«失»«败»«：»«确»«认»«后»«端»«启»«动»«时»«设»«置»«了» ADMIN_USERNAME/ADMIN_PASSWORD«，»«并»«与» run_smoke_test.bat «使»«用»«的»«一»«致»"
+        },
+        {
+          "line": 43,
+          "col": 3,
+          "snippet": "- «端»«口»«冲»«突»«：»«调»«整» API_BASE «或» uvicorn «启»«动»«端»«口»«（»--port«）»"
+        },
+        {
+          "line": 44,
+          "col": 3,
+          "snippet": "- «依»«赖»«问»«题»«：»«优»«先»«在» .venv «或» test_env «中»«运»«行»«；»«必»«要»«时»«执»«行» pip install -r requirements.txt"
+        }
+      ],
+      "hit_count": 27
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\App.css",
+      "hits": [
+        {
+          "line": 12,
+          "col": 47,
+          "snippet": "  background-color: rgba(40, 44, 52, 0.9); /* «添»«加»«透»«明»«度»«以»«便»«看»«到»«背»«景» */"
+        },
+        {
+          "line": 26,
+          "col": 48,
+          "snippet": "  background-color: rgba(58, 63, 75, 0.95); /* «添»«加»«透»«明»«度» */"
+        },
+        {
+          "line": 121,
+          "col": 4,
+          "snippet": "/* «表»«格»«单»«元»«格» */"
+        },
+        {
+          "line": 128,
+          "col": 4,
+          "snippet": "/* «可»«选»«：»«给»«表»«格»«行»«添»«加»«平»«滑»«过»«渡»«，»«悬»«停»«更»«柔»«和» */"
+        },
+        {
+          "line": 133,
+          "col": 4,
+          "snippet": "/* «将»«悬»«停»«背»«景»«从»«深»«色»«改»«为»«淡»«绿»«色» */"
+        },
+        {
+          "line": 138,
+          "col": 4,
+          "snippet": "/* «两»«栏»«布»«局»«样»«式» */"
+        },
+        {
+          "line": 209,
+          "col": 7,
+          "snippet": "/* PDF«查»«询»«相»«关»«样»«式» */"
+        },
+        {
+          "line": 237,
+          "col": 4,
+          "snippet": "/* «表»«格»«增»«强»«样»«式» */"
+        },
+        {
+          "line": 245,
+          "col": 4,
+          "snippet": "/* «批»«量»«处»«理»«按»«钮»«样»«式» */"
+        },
+        {
+          "line": 285,
+          "col": 4,
+          "snippet": "/* «批»«量»«查»«询»«控»«制»«样»«式» - «保»«持»«向»«后»«兼»«容» */"
+        },
+        {
+          "line": 314,
+          "col": 4,
+          "snippet": "/* «进»«度»«条»«样»«式» */"
+        },
+        {
+          "line": 396,
+          "col": 9,
+          "snippet": "/* Excel«上»«传»«成»«功»«提»«示»«样»«式» */"
+        },
+        {
+          "line": 427,
+          "col": 6,
+          "snippet": "/* AI«结»«果»«列»«样»«式» */"
+        },
+        {
+          "line": 476,
+          "col": 6,
+          "snippet": "/* AI«查»«询»«结»«果»«样»«式» */"
+        },
+        {
+          "line": 631,
+          "col": 4,
+          "snippet": "/* «下»«载»«按»«钮»«样»«式» */"
+        },
+        {
+          "line": 677,
+          "col": 4,
+          "snippet": "/* «新»«增»«：»«禁»«用»«态»«置»«灰»«样»«式» */"
+        },
+        {
+          "line": 706,
+          "col": 4,
+          "snippet": "/* «失»«败»«记»«录»«重»«试»«功»«能»«样»«式» */"
+        },
+        {
+          "line": 851,
+          "col": 4,
+          "snippet": "/* «响»«应»«式»«设»«计» */"
+        },
+        {
+          "line": 911,
+          "col": 4,
+          "snippet": "/* «响»«应»«式»«背»«景»«图» */"
+        },
+        {
+          "line": 914,
+          "col": 39,
+          "snippet": "    background-attachment: scroll; /* «移»«动»«设»«备»«上»«使»«用» scroll */"
+        }
+      ],
+      "hit_count": 20
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\App.js",
+      "hits": [
+        {
+          "line": 42,
+          "col": 56,
+          "snippet": "  const [sessionId, setSessionId] = useState(null); // «新»«增»«：»«管»«理» sessionId «状»«态»"
+        },
+        {
+          "line": 43,
+          "col": 99,
+          "snippet": "yStats, setBatchQueryStats] = useState({ total: 0, success: 0, failed: 0 }); // «新»«增»«：»«管»«理»«统»«计»«信»«息»"
+        },
+        {
+          "line": 54,
+          "col": 6,
+          "snippet": "  // «新»«增»«：»«事»«件»«处»«理»«回»«调»«，»«供»«子»«组»«件»«调»«用»«，»«修»«复»«未»«定»«义»«错»«误»"
+        },
+        {
+          "line": 58,
+          "col": 8,
+          "snippet": "    // «数»«据»«变»«化»«后»«，»«重»«置»«下»«载»«就»«绪»«状»«态»"
+        },
+        {
+          "line": 82,
+          "col": 6,
+          "snippet": "  // «新»«增»«：»«当»«面»«板»«打»«开»«时»«，»«如»«果»«角»«色»«不»«是» admin«，»«则»«自»«动»«关»«闭»"
+        },
+        {
+          "line": 100,
+          "col": 25,
+          "snippet": "        {/* Admin Panel «入»«口»«守»«卫» */}"
+        },
+        {
+          "line": 124,
+          "col": 32,
+          "snippet": "        {/* Download section - «使»«用»«新»«架»«构» */}"
+        },
+        {
+          "line": 140,
+          "col": 4,
+          "snippet": "// «无»«权»«限»«面»«板»«（»«内»«联»«）»"
+        }
+      ],
+      "hit_count": 8
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\AdminLoginModal.js",
+      "hits": [
+        {
+          "line": 46,
+          "col": 10,
+          "snippet": "      // «明»«确»«区»«分»«账»«号»/«密»«码»«错»«误»"
+        },
+        {
+          "line": 49,
+          "col": 19,
+          "snippet": "        setError(\"«账»«号»«或»«密»«码»«错»«误»\");"
+        },
+        {
+          "line": 51,
+          "col": 26,
+          "snippet": "        setError(msg || \"«登»«录»«失»«败»\");"
+        }
+      ],
+      "hit_count": 3
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\AdminLoginPage.js",
+      "hits": [
+        {
+          "line": 41,
+          "col": 10,
+          "snippet": "      // «登»«录»«后»«根»«据» redirect «参»«数»«跳»«回»«目»«标»«（»«更»«健»«壮»«的»«跳»«转»«方»«式»«）»"
+        },
+        {
+          "line": 45,
+          "col": 61,
+          "snippet": "      let redirect = params.get(\"redirect\") || \"/\";      // «默»«认»«跳»«回»«首»«页»"
+        },
+        {
+          "line": 46,
+          "col": 62,
+          "snippet": "      if (!redirect.startsWith(\"/\")) redirect = \"/\";      // «兜»«底»«：»«非»«法»«值»«回»«首»«页»"
+        },
+        {
+          "line": 49,
+          "col": 13,
+          "snippet": "      // 1) «使»«用» replace «避»«免»“«后»«退»«回»«到»«登»«录»«页»”"
+        },
+        {
+          "line": 53,
+          "col": 13,
+          "snippet": "      // 2) «极»«少»«数»«情»«况»«下»«备»«用»«：»«确»«保»«触»«发»«一»«次» hashchange"
+        },
+        {
+          "line": 64,
+          "col": 19,
+          "snippet": "        setError(\"«您»«没»«有»«权»«限»«或»«账»«号»/«密»«码»«错»«误»\");"
+        },
+        {
+          "line": 66,
+          "col": 26,
+          "snippet": "        setError(msg || \"«登»«录»«失»«败»\");"
+        },
+        {
+          "line": 122,
+          "col": 11,
+          "snippet": "          «登»«录»«成»«功»«后»«将»«进»«入» Admin «面»«板»«页»«面»"
+        }
+      ],
+      "hit_count": 8
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\AdminMenu.js",
+      "hits": [
+        {
+          "line": 29,
+          "col": 8,
+          "snippet": "    // «登»«录»/«注»«销»«等»«变»«化»«时»«，»«刷»«新» session"
+        },
+        {
+          "line": 54,
+          "col": 8,
+          "snippet": "    // «立»«即»«刷»«新»«菜»«单»«显»«示»"
+        },
+        {
+          "line": 82,
+          "col": 11,
+          "snippet": "      {/* «弹»«窗»«版»«登»«录»«已»«废»«弃» */}"
+        }
+      ],
+      "hit_count": 3
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\BatchProcessing.js",
+      "hits": [
+        {
+          "line": 17,
+          "col": 6,
+          "snippet": "  // «监»«听» sessionId «变»«化»«并»«通»«知»«父»«组»«件»"
+        },
+        {
+          "line": 25,
+          "col": 6,
+          "snippet": "  // «监»«听» batchQueryStats «变»«化»«并»«通»«知»«父»«组»«件»"
+        },
+        {
+          "line": 33,
+          "col": 6,
+          "snippet": "  // «监»«听»«批»«量»«查»«询»«完»«成»«状»«态»"
+        },
+        {
+          "line": 57,
+          "col": 10,
+          "snippet": "      // «传»«递»«来»«源»«标»«记»«，»«避»«免»«父»«组»«件»«重»«置» sessionId"
+        }
+      ],
+      "hit_count": 4
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\DownloadResults.js",
+      "hits": [
+        {
+          "line": 7,
+          "col": 6,
+          "snippet": "  // «使»«用»«新»«的»«下»«载»«架»«构»«：»«通»«过» session_id «直»«接»«从»«后»«端»«缓»«存»«下»«载»"
+        },
+        {
+          "line": 25,
+          "col": 10,
+          "snippet": "      // «使»«用»«新»«的»«下»«载»«接»«口»«：»«通»«过» session_id «直»«接»«下»«载»"
+        },
+        {
+          "line": 40,
+          "col": 10,
+          "snippet": "      // «从»«响»«应»«头»«获»«取»«文»«件»«名»"
+        },
+        {
+          "line": 78,
+          "col": 6,
+          "snippet": "  // «始»«终»«渲»«染»«下»«载»«区»«域»«，»«按»«钮»«根»«据»«状»«态»«禁»«用»"
+        }
+      ],
+      "hit_count": 4
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\AdminConfigPage.js",
+      "hits": [
+        {
+          "line": 20,
+          "col": 6,
+          "snippet": "  // «验»«证»«逻»«辑»"
+        },
+        {
+          "line": 33,
+          "col": 6,
+          "snippet": "  // «警»«告»«计»«算»"
+        },
+        {
+          "line": 42,
+          "col": 28,
+          "snippet": "        w.pricing_model = \"«该»«值»«看»«起»«来»«不»«像»«预»«置»«名»«或»CSV«路»«径»«，»«保»«存»«后»«会»«按»«原»«样»«提»«交»«到»«后»«端»«。»\";"
+        },
+        {
+          "line": 44,
+          "col": 28,
+          "snippet": "        w.pricing_model = \"«检»«测»«到»«路»«径»«，»«建»«议»«使»«用» .csv «文»«件»«以»«获»«得»«最»«佳»«兼»«容»«性»«。»\";"
+        },
+        {
+          "line": 50,
+          "col": 6,
+          "snippet": "  // «事»«件»«处»«理»«函»«数»"
+        },
+        {
+          "line": 118,
+          "col": 63,
+          "snippet": "      const resp = await apiFetch(\"/admin/model-catalog\"); // «修»«改»«：»«从» /admin/models «改»«为» /admin/model-catalog"
+        },
+        {
+          "line": 128,
+          "col": 6,
+          "snippet": "  // «计»«算»«属»«性»"
+        },
+        {
+          "line": 184,
+          "col": 6,
+          "snippet": "  // «初»«始»«化»"
+        },
+        {
+          "line": 215,
+          "col": 18,
+          "snippet": "          title=\"«当»«前»«模»«型»«详»«情»\""
+        }
+      ],
+      "hit_count": 9
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\AdminMetricsPage.js",
+      "hits": [
+        {
+          "line": 20,
+          "col": 6,
+          "snippet": "  // «新»«增»«：»«从» summary «派»«生» Total Cost«，»«默»«认» 0"
+        },
+        {
+          "line": 57,
+          "col": 11,
+          "snippet": "      {/* «标»«题» + «总»«成»«本»«优»«雅»«徽»«章» */}"
+        },
+        {
+          "line": 81,
+          "col": 15,
+          "snippet": "          {/* «简»«洁»«图»«标» */}"
+        },
+        {
+          "line": 95,
+          "col": 11,
+          "snippet": "      {/* «原»«有»«筛»«选»«器»«、»«概»«览»«卡»«片»«、»«图»«表»«、»«表»«格» */}"
+        },
+        {
+          "line": 96,
+          "col": 11,
+          "snippet": "      {/* «注»«意»«：»«下»«面»«是»«原»«有»«内»«容»«，»«无»«需»«改»«动» */}"
+        }
+      ],
+      "hit_count": 5
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\AdminPanel.js",
+      "hits": [
+        {
+          "line": 53,
+          "col": 8,
+          "snippet": "    // «打»«开»«面»«板»«时»«恢»«复»«上»«次» Tab"
+        },
+        {
+          "line": 58,
+          "col": 8,
+          "snippet": "    // «登»«录»«状»«态»/«角»«色»«变»«化»«时»«刷»«新»«（»«例»«如» 401 «自»«动»«注»«销»«）»"
+        }
+      ],
+      "hit_count": 2
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\AdminPanelPage.js",
+      "hits": [
+        {
+          "line": 15,
+          "col": 6,
+          "snippet": "  // «未»«登»«录»«时»«自»«动» 1.2s «跳»«到»«登»«录»«页»«，»«并»«带»«上» redirect «返»«回»«当»«前»«目»«标»"
+        },
+        {
+          "line": 26,
+          "col": 6,
+          "snippet": "  // «左»«侧»«三»«分»«区»«状»«态»«：»\"access\" | \"config\" | \"cost\""
+        },
+        {
+          "line": 29,
+          "col": 6,
+          "snippet": "  // «可»«选»«：»«初»«次»«从» URL «读»«取» section«（»?section=config / cost / access«）»"
+        },
+        {
+          "line": 39,
+          "col": 6,
+          "snippet": "  // «可»«选»«：»«状»«态»«变»«化»«时»«同»«步»«到» URL«，»«便»«于»«刷»«新»«记»«忆»"
+        }
+      ],
+      "hit_count": 4
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\AdminUsersPage.js",
+      "hits": [
+        {
+          "line": 16,
+          "col": 6,
+          "snippet": "  // «统»«一»«禁»«用»«条»«件»«，»«方»«便»«复»«用»«样»«式»"
+        }
+      ],
+      "hit_count": 1
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\NoAccess.js",
+      "hits": [
+        {
+          "line": 16,
+          "col": 44,
+          "snippet": "        <h2 style={{ margin: \"0 0 12px\" }}>«无»«权»«限»«访»«问»</h2>"
+        },
+        {
+          "line": 18,
+          "col": 11,
+          "snippet": "          «请»«使»«用»«管»«理»«员»«账»«号»«登»«录»«后»«访»«问» Admin «面»«板»«。»"
+        },
+        {
+          "line": 31,
+          "col": 11,
+          "snippet": "          «去»«登»«录»"
+        }
+      ],
+      "hit_count": 3
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\StatCards.js",
+      "hits": [
+        {
+          "line": 20,
+          "col": 51,
+          "snippet": "  const sentiment = totals?.outputTokens ?? 0; // «仍»«按»«之»«前»«口»«径»«映»«射»«为»“«总»«输»«出» tokens”"
+        },
+        {
+          "line": 21,
+          "col": 54,
+          "snippet": "  const avgRating = totals?.avgTokensPerReq ?? 0; // «仍»«按»«之»«前»«口»«径»«映»«射»«为»“«平»«均» tokens/«请»«求»”"
+        }
+      ],
+      "hit_count": 2
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\Topbar.js",
+      "hits": [
+        {
+          "line": 16,
+          "col": 11,
+          "snippet": "          «欢»«迎»«回»«来»«，»{username}{loading ? \" · «正»«在»«加»«载»…\" : \"\"}{error ? \" · «加»«载»«失»«败»\" : \"\"}"
+        }
+      ],
+      "hit_count": 1
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\components\\MetricsCharts.js",
+      "hits": [
+        {
+          "line": 59,
+          "col": 6,
+          "snippet": "  // «与»«原»«逻»«辑»«保»«持»«一»«致»«：»«根»«据»«数»«据»«量»«拉»«宽»«画»«布»«，»«外»«层»«容»«器»«可»«横»«向»«滚»«动»"
+        },
+        {
+          "line": 70,
+          "col": 6,
+          "snippet": "  // «高»«亮»«：»«非»«选»«中»«系»«列»«整»«体»«降»«低»«透»«明»«度»"
+        }
+      ],
+      "hit_count": 2
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\components\\ModelCatalog.js",
+      "hits": [
+        {
+          "line": 1,
+          "col": 4,
+          "snippet": "// «文»«件»«：»ModelCatalog.js«（»«仅»«保»«留»«卡»«片»«详»«情» + «高»«级»«字»«段»«折»«叠»«版»«本»«）»"
+        },
+        {
+          "line": 13,
+          "col": 6,
+          "snippet": "  // «关»«键»«字»«段»«优»«先»«显»«示»«（»«按»«你»«的» CSV «字»«段»«名»«自»«行»«调»«整»«）»"
+        },
+        {
+          "line": 29,
+          "col": 6,
+          "snippet": "  // «友»«好»«值»«格»«式»«化»"
+        },
+        {
+          "line": 34,
+          "col": 8,
+          "snippet": "    // «成»«本»«字»«段»«保»«留»«美»«元»«符»«号»"
+        },
+        {
+          "line": 39,
+          "col": 6,
+          "snippet": "  // «仅»«展»«示»«当»«前»«选»«中»«模»«型»«的»«信»«息»"
+        },
+        {
+          "line": 51,
+          "col": 9,
+          "snippet": "        «请»«选»«择»«左»«侧»«模»«型»«或»«在»«设»«置»«中»«选»«择»«一»«个»«模»«型»«以»«查»«看»«详»«细»«信»«息»"
+        },
+        {
+          "line": 56,
+          "col": 6,
+          "snippet": "  // «组»«装»«详»«情»«数»«据»"
+        },
+        {
+          "line": 67,
+          "col": 6,
+          "snippet": "  // «统»«一»«浅»«色»«卡»«片»«样»«式»"
+        },
+        {
+          "line": 122,
+          "col": 6,
+          "snippet": "  // «渲»«染»"
+        },
+        {
+          "line": 127,
+          "col": 13,
+          "snippet": "        {/* «关»«键»«字»«段»«（»«两»«列»«栅»«格»«）» */}"
+        },
+        {
+          "line": 137,
+          "col": 13,
+          "snippet": "        {/* «高»«级»«字»«段»«折»«叠» */}"
+        },
+        {
+          "line": 152,
+          "col": 32,
+          "snippet": "              {showAdvanced ? \"«收»«起»«更»«多»«字»«段»\" : \"«展»«开»«更»«多»«字»«段»\"}"
+        },
+        {
+          "line": 157,
+          "col": 48,
+          "snippet": "                <div style={sectionTitleStyle}>«更»«多»«字»«段»</div>"
+        }
+      ],
+      "hit_count": 13
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\components\\SettingsForm.js",
+      "hits": [
+        {
+          "line": 6,
+          "col": 16,
+          "snippet": "  cfg = {}, // «使»«用»cfg«而»«不»«是»config«，»«与»AdminConfigPage«保»«持»«一»«致»"
+        },
+        {
+          "line": 7,
+          "col": 21,
+          "snippet": "  onChangeField, // «使»«用»onChangeField«而»«不»«是»onConfigChange"
+        },
+        {
+          "line": 19,
+          "col": 26,
+          "snippet": "  selectedRow = null, // «新»«增»«：»«选»«中»«的»«模»«型»«行»«数»«据»"
+        },
+        {
+          "line": 20,
+          "col": 26,
+          "snippet": "  getByPattern = null // «新»«增»«：»«获»«取»«模»«型»«字»«段»«的»«函»«数»"
+        },
+        {
+          "line": 36,
+          "col": 6,
+          "snippet": "  // «从»«选»«中»«的»«模»«型»«行»«获»«取»«成»«本»«信»«息»"
+        },
+        {
+          "line": 55,
+          "col": 11,
+          "snippet": "      {/* «显»«示»«错»«误»«信»«息» */}"
+        },
+        {
+          "line": 70,
+          "col": 11,
+          "snippet": "      {/* «显»«示»«字»«段»«验»«证»«错»«误» */}"
+        },
+        {
+          "line": 87,
+          "col": 11,
+          "snippet": "      {/* «显»«示»«警»«告»«信»«息» */}"
+        },
+        {
+          "line": 104,
+          "col": 11,
+          "snippet": "      {/* «显»«示»«保»«存»«成»«功»«信»«息» */}"
+        }
+      ],
+      "hit_count": 9
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\styles\\commonStyles.js",
+      "hits": [
+        {
+          "line": 1,
+          "col": 4,
+          "snippet": "// «控»«件»«样»«式»"
+        },
+        {
+          "line": 12,
+          "col": 4,
+          "snippet": "// «标»«签»«样»«式»"
+        },
+        {
+          "line": 21,
+          "col": 4,
+          "snippet": "// «基»«础»«按»«钮»«样»«式»"
+        },
+        {
+          "line": 34,
+          "col": 4,
+          "snippet": "// «主»«要»«按»«钮»«样»«式»"
+        },
+        {
+          "line": 41,
+          "col": 4,
+          "snippet": "// «次»«要»«按»«钮»«样»«式»"
+        },
+        {
+          "line": 48,
+          "col": 4,
+          "snippet": "// «幽»«灵»«按»«钮»«样»«式»"
+        },
+        {
+          "line": 56,
+          "col": 4,
+          "snippet": "// «表»«格»«样»«式»"
+        },
+        {
+          "line": 66,
+          "col": 4,
+          "snippet": "// «单»«元»«格»«样»«式»"
+        }
+      ],
+      "hit_count": 8
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\utils\\formatters.js",
+      "hits": [
+        {
+          "line": 1,
+          "col": 4,
+          "snippet": "// «格»«式»«化»«工»«具»«函»«数»"
+        },
+        {
+          "line": 17,
+          "col": 7,
+          "snippet": "// CSV«导»«出»«工»«具»«函»«数»"
+        },
+        {
+          "line": 29,
+          "col": 4,
+          "snippet": "// «下»«载»CSV«文»«件»"
+        },
+        {
+          "line": 40,
+          "col": 4,
+          "snippet": "// «日»«期»«格»«式»«化»"
+        },
+        {
+          "line": 45,
+          "col": 4,
+          "snippet": "// «获»«取»«默»«认»«日»«期»«范»«围»«（»«最»«近»7«天»«）»"
+        }
+      ],
+      "hit_count": 5
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\components\\admin\\utils\\validators.js",
+      "hits": [
+        {
+          "line": 1,
+          "col": 4,
+          "snippet": "// «配»«置»«验»«证»«函»«数»"
+        },
+        {
+          "line": 12,
+          "col": 4,
+          "snippet": "// «计»«算»«配»«置»«警»«告»"
+        },
+        {
+          "line": 23,
+          "col": 4,
+          "snippet": "// «检»«查»«配»«置»«是»«否»«有»«变»«更»"
+        }
+      ],
+      "hit_count": 3
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\hooks\\useBatchQuery.js",
+      "hits": [
+        {
+          "line": 13,
+          "col": 56,
+          "snippet": "  const [sessionId, setSessionId] = useState(null); // «新»«增»«：»«存»«储» session_id"
+        },
+        {
+          "line": 29,
+          "col": 28,
+          "snippet": "    setSessionId(null); // «重»«置» session_id"
+        },
+        {
+          "line": 32,
+          "col": 10,
+          "snippet": "      // «使»«用»«流»«式»«接»«口»«获»«取»«实»«时»«进»«度»"
+        },
+        {
+          "line": 66,
+          "col": 20,
+          "snippet": "                // «实»«时»«更»«新»«进»«度»"
+        },
+        {
+          "line": 76,
+          "col": 20,
+          "snippet": "                // «处»«理»«完»«成»"
+        },
+        {
+          "line": 80,
+          "col": 20,
+          "snippet": "                // «获»«取»«并»«存»«储» session_id"
+        },
+        {
+          "line": 86,
+          "col": 20,
+          "snippet": "                // «调»«用»«回»«调»«函»«数»«，»«传»«递»«处»«理»«后»«的»«数»«据»"
+        },
+        {
+          "line": 93,
+          "col": 20,
+          "snippet": "                // «处»«理»«统»«计»«信»«息»"
+        },
+        {
+          "line": 146,
+          "col": 19,
+          "snippet": "    sessionId, // «新»«增»«：»«返»«回» session_id"
+        }
+      ],
+      "hit_count": 9
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\index.js",
+      "hits": [
+        {
+          "line": 49,
+          "col": 8,
+          "snippet": "    // «未»«登»«录»«则»«带»«上» redirect «参»«数»«跳»«转»«到»«登»«录»«页»"
+        },
+        {
+          "line": 51,
+          "col": 62,
+          "snippet": "      const redirect = encodeURIComponent(hash.slice(1)); // «形»«如» \"/admin-panel?section=config\""
+        },
+        {
+          "line": 57,
+          "col": 11,
+          "snippet": "  // NEW: «首»«页»«必»«须»«登»«录»"
+        },
+        {
+          "line": 59,
+          "col": 50,
+          "snippet": "    const redirect = encodeURIComponent(\"/\"); // «登»«录»«后»«返»«回»«首»«页»"
+        },
+        {
+          "line": 78,
+          "col": 4,
+          "snippet": "// «注»«册»«刷»«新»«器»«（»«需»«要»«后»«端»«提»«供» /auth/refresh«）»"
+        }
+      ],
+      "hit_count": 5
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\utils\\api.js",
+      "hits": [
+        {
+          "line": 112,
+          "col": 10,
+          "snippet": "      // «仅»«在»“«非» refresh «请»«求» «且» attachAuth=true”«时»«执»«行»«硬»«登»«出»"
+        }
+      ],
+      "hit_count": 1
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\frontend\\src\\utils\\fileUtils.js",
+      "hits": [
+        {
+          "line": 30,
+          "col": 8,
+          "snippet": "    // «修»«改»«请»«求»URL«，»«匹»«配»«后»«端»«端»«口»«和»«路»«径»"
+        },
+        {
+          "line": 46,
+          "col": 8,
+          "snippet": "    // «获»«取»«文»«件»blob"
+        },
+        {
+          "line": 49,
+          "col": 8,
+          "snippet": "    // «创»«建»«下»«载»«链»«接»"
+        },
+        {
+          "line": 55,
+          "col": 8,
+          "snippet": "    // «触»«发»«下»«载»"
+        },
+        {
+          "line": 59,
+          "col": 8,
+          "snippet": "    // «清»«理»"
+        }
+      ],
+      "hit_count": 5
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\src\\main.py",
+      "hits": [
+        {
+          "line": 84,
+          "col": 7,
+          "snippet": "    # «从» DB «恢»«复» PRICING_FILE«（»«重»«启»«后»«仍»«然»«生»«效»«）»"
+        },
+        {
+          "line": 90,
+          "col": 15,
+          "snippet": "            # «与» routes «中»«一»«致»«的»«解»«析»«逻»«辑»«（»«简»«化»«版»«）»"
+        }
+      ],
+      "hit_count": 2
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\src\\rag_service.py",
+      "hits": [
+        {
+          "line": 53,
+          "col": 3,
+          "snippet": "# «默»«认»«常»«量»«（»«作»«为»«后»«备»«值»«和»«兼»«容»«导»«出»«项»«）»"
+        },
+        {
+          "line": 59,
+          "col": 17,
+          "snippet": "    Lazy import «避»«免»«潜»«在»«循»«环»«依»«赖»«。»«失»«败»«时»«返»«回» None«。»"
+        },
+        {
+          "line": 69,
+          "col": 5,
+          "snippet": "    «返»«回» Admin «配»«置»«中»«的»«模»«型»«；»«若»«不»«可»«用»«，»«则»«退»«回»«到» MAX_AI_MODEL«。»"
+        },
+        {
+          "line": 77,
+          "col": 5,
+          "snippet": "    «返»«回» Admin «配»«置»«中»«的»«温»«度»«；»«若»«不»«可»«用»«，»«则»«退»«回»«到» TEMPERATURE«。»"
+        },
+        {
+          "line": 275,
+          "col": 85,
+          "snippet": "    s = re.sub(r'^(Certainly|Sure|Of course|Absolutely|Great|Okay|Ok|No problem|«当»«然»|«没»«问»«题»|«好»«的»)[!,.«，»«。»]?\\s+', '', s, flags=re.IGNORECASE)"
+        },
+        {
+          "line": 276,
+          "col": 53,
+          "snippet": "        s = re.sub(r'^(Below (is|are)|Here (is|are)|«以»«下»«为»)\\b[^\\n]*\\n+', '', s, flags=re.IGNORECASE)"
+        },
+        {
+          "line": 318,
+          "col": 125,
+          "snippet": "conversational openers such as \"Certainly\", \"Sure\", \"Of course\", \"Absolutely\", \"«好»«的»\", \"«没»«问»«题»\", \"«当»«然»\"."
+        },
+        {
+          "line": 336,
+          "col": 125,
+          "snippet": "conversational openers such as \"Certainly\", \"Sure\", \"Of course\", \"Absolutely\", \"«好»«的»\", \"«没»«问»«题»\", \"«当»«然»\"."
+        },
+        {
+          "line": 355,
+          "col": 76,
+          "snippet": "Avoid any conversational openers (e.g., \"Certainly\", \"Sure\", \"Of course\", \"«好»«的»\", \"«当»«然»\") and do not include greetings or exclamation marks."
+        },
+        {
+          "line": 361,
+          "col": 11,
+          "snippet": "        # «动»«态»«创»«建»«基»«于»«当»«前»«配»«置»«的» LLM «客»«户»«端»"
+        },
+        {
+          "line": 363,
+          "col": 11,
+          "snippet": "        # «为»«便»«于»«排»«查»«，»«记»«录»«实»«际»«使»«用»«的»«模»«型»«与»«温»«度»"
+        },
+        {
+          "line": 365,
+          "col": 26,
+          "snippet": "            # ChatOpenAI «对»«象»«属»«性»«名»«与»«实»«现»«可»«能»«不»«同»«，»«这»«里»«仅»«用»«于»«日»«志»«展»«示»"
+        }
+      ],
+      "hit_count": 12
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\src\\routes.py",
+      "hits": [
+        {
+          "line": 239,
+          "col": 7,
+          "snippet": "    # «同»«步»«设»«置» PRICING_FILE «环»«境»«变»«量»«（»«影»«响» token_utils «计»«费»«）»"
+        },
+        {
+          "line": 246,
+          "col": 15,
+          "snippet": "            # «清»«除»«后»«回»«退»«到» token_utils «的»«默»«认» mapping/pricing_model.csv"
+        },
+        {
+          "line": 254,
+          "col": 8,
+          "snippet": "# NEW: «读»«取» CSV «为»«通»«用»«表»«格»«（»«返»«回»«列»«与»«行»«）»"
+        },
+        {
+          "line": 263,
+          "col": 15,
+          "snippet": "            # «去»«除»«首»«尾»«空»«白»«，»«并»«把» TRUE/FALSE «统»«一»«保»«持»«原»«值»«（»«前»«端»«已»«按»«文»«本»«展»«示»«）»"
+        },
+        {
+          "line": 276,
+          "col": 5,
+          "snippet": "    «返»«回»«模»«型»«参»«数»«表»«（»«从» CSV «读»«取»«）»«：»"
+        },
+        {
+          "line": 277,
+          "col": 7,
+          "snippet": "    - «若»«提»«供» ?source=«，»«使»«用»«该»«值»«定»«位»«文»«件»«（»«支»«持»«绝»«对»/«相»«对»«路»«径»«、».csv«、»«或»«预»«置»«名»«）»"
+        },
+        {
+          "line": 278,
+          "col": 7,
+          "snippet": "    - «否»«则»«优»«先»«使»«用»«当»«前» Config.pricing_model«，»«再»«回»«退»«到» mapping/pricing_model.csv"
+        },
+        {
+          "line": 279,
+          "col": 5,
+          "snippet": "    «响»«应»«：»"
+        },
+        {
+          "line": 284,
+          "col": 11,
+          "snippet": "        # «解»«析»«文»«件»«路»«径»«（»«支»«持»«预»«置»«名»«）»«，»«沿»«用»«现»«有»«解»«析»«规»«则»"
+        },
+        {
+          "line": 301,
+          "col": 11,
+          "snippet": "        # «始»«终»«把»“«项»«目»«根»«的» mapping/pricing_model.csv”«作»«为»«优»«先»«兜»«底»"
+        },
+        {
+          "line": 303,
+          "col": 11,
+          "snippet": "        # «兼»«容»«性»«兜»«底»«：»CWD «下»«的» mapping«（»«若»«有»«人»«从» src «目»«录»«启»«动»«）»"
+        },
+        {
+          "line": 418,
+          "col": 5,
+          "snippet": "    «双»«模»«式»«解»«析»«：»"
+        },
+        {
+          "line": 419,
+          "col": 7,
+          "snippet": "    - «若»«为»«绝»«对»«路»«径»«、»«包»«含»«路»«径»«分»«隔»«符»«，»«或»«以» .csv «结»«尾»«，»«则»«按»«路»«径»«处»«理»«（»«相»«对»«路»«径»«将»«相»«对»«项»«目»«根»«转»«绝»«对»«）»«。»"
+        },
+        {
+          "line": 420,
+          "col": 7,
+          "snippet": "    - «否»«则»«视»«为»«预»«置»«名»«，»«映»«射»«到» <project_root>/mapping/{name}.csv«。»"
+        },
+        {
+          "line": 421,
+          "col": 5,
+          "snippet": "    «返»«回»«解»«析»«后»«的»«绝»«对»«路»«径»«；»«无»«法»«解»«析»«时»«返»«回» None«。»"
+        },
+        {
+          "line": 429,
+          "col": 7,
+          "snippet": "    # «路»«径»«模»«式»"
+        },
+        {
+          "line": 433,
+          "col": 7,
+          "snippet": "    # «预»«置»«名»«模»«式»"
+        },
+        {
+          "line": 437,
+          "col": 3,
+          "snippet": "# «在» /auth/login «之»«后»«新»«增» /auth/refresh «路»«由»"
+        }
+      ],
+      "hit_count": 18
+    },
+    {
+      "file": "D:\\Workspace\\hackathon\\src\\streaming_service.py",
+      "hits": [
+        {
+          "line": 289,
+          "col": 23,
+          "snippet": "                    # «在»«批»«处»«理»/«重»«试»«的»«统»«计»«日»«志»«处»«，»«替»«换»«对» MAX_AI_MODEL «的»«使»«用»"
+        },
+        {
+          "line": 290,
+          "col": 23,
+          "snippet": "                    # «例»«如»«（»«示»«例»«片»«段»«）»«：»"
+        }
+      ],
+      "hit_count": 2
+    }
+  ]
+}
