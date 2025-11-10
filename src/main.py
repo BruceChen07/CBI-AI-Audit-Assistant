@@ -147,9 +147,12 @@ def _init_auth():
         logger.warning(f"[startup] Failed to restore PRICING_FILE: {e}")
 
 # Add static file service
-if os.path.exists("../frontend/build"):
-    app.mount("/static", StaticFiles(directory="../frontend/build/static"), name="static")
-    app.mount("/", StaticFiles(directory="../frontend/build", html=True), name="frontend")
+frontend_build_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "frontend", "build"))
+if os.path.isdir(frontend_build_dir):
+    app.mount("/static", StaticFiles(directory=os.path.join(frontend_build_dir, "static")), name="static")
+    app.mount("/", StaticFiles(directory=frontend_build_dir, html=True), name="frontend")
+else:
+    logger.warning(f"[startup] Frontend build not found at {frontend_build_dir}; serving API only.")
 # Add the following code before uvicorn.run()
 if getattr(sys, 'frozen', False):
     # If running in a PyInstaller bundled environment

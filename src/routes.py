@@ -57,7 +57,9 @@ from auth import (
     list_model_overrides as auth_list_model_overrides,
     get_model_details_override as auth_get_model_override,
     update_model_details_override as auth_update_model_override,
-    delete_model_details_override as auth_delete_model_override,
+    delete_model_details_override as auth_delete_model_delete_override,
+    get_keyword_configs as auth_get_keyword_configs,
+    update_keyword_configs as auth_update_keyword_configs,
 )
 from token_utils import normalize_model_name
 
@@ -624,3 +626,22 @@ async def admin_delete_model_details(request: Request, model: str, keys: Optiona
     auth_delete_model_override(model, key_list)
     resp = await admin_get_model_details(request, model)
     return resp
+
+
+class KeywordItem(BaseModel):
+    keyword: str = Field(..., min_length=1)
+    color: str = Field("#FF0000")
+
+class KeywordItems(BaseModel):
+    items: List[KeywordItem]
+
+@router.get("/admin/keywords")
+async def admin_get_keywords(request: Request):
+    require_admin(request)
+    return {"items": auth_get_keyword_configs()}
+
+@router.put("/admin/keywords")
+async def admin_update_keywords(request: Request, payload: KeywordItems):
+    require_admin(request)
+    saved = auth_update_keyword_configs([i.dict() for i in payload.items or []])
+    return {"items": saved}

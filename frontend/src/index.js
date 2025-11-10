@@ -34,11 +34,24 @@ import AdminLoginPage from "./components/AdminLoginPage";
 import AdminPanelPage from "./components/admin/AdminPanelPage";
 
 function Root() {
-  const [hash, setHash] = React.useState(window.location.hash || "#/");
+  // 初始哈希：优先用当前哈希，其次用最近一次访问的哈希，最后回到 "#/"
+  const [hash, setHash] = React.useState(
+    window.location.hash || localStorage.getItem("last_route") || "#/"
+  );
 
   React.useEffect(() => {
-    const onHashChange = () => setHash(window.location.hash || "#/");
+    const onHashChange = () => {
+      const newHash = window.location.hash || "#/";
+      setHash(newHash);
+      try {
+        localStorage.setItem("last_route", newHash);
+      } catch {}
+    };
     window.addEventListener("hashchange", onHashChange);
+    // 进入时也记录一次（处理刷新场景）
+    try {
+      localStorage.setItem("last_route", window.location.hash || "#/");
+    } catch {}
     return () => window.removeEventListener("hashchange", onHashChange);
   }, []);
 

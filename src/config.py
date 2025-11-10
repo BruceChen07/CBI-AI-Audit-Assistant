@@ -67,6 +67,13 @@ def setup_logging():
     root_logger.addHandler(file_handler)
     root_logger.addHandler(console_handler)
     
+    # Log MAX_AI_URL for troubleshooting
+    try:
+        max_ai_url = os.getenv("MAX_AI_URL", "")
+        root_logger.info(f"[env] MAX_AI_URL = {max_ai_url or '(empty)'}")
+    except Exception as _:
+        pass
+
     # Return a logger for the calling module
     return logging.getLogger(__name__)
 

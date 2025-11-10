@@ -102,28 +102,28 @@ const clearLogHistory = () => {
 };
 
 // Log functions
-const debug = (message, data) => {
+const debugLegacy = (message, data) => {
   if (currentLogLevel <= LogLevel.DEBUG) {
     const logEntry = addToHistory('debug', message, data);
     console.debug(`[DEBUG] ${logEntry.timestamp} - ${message}`, data || '');
   }
 };
 
-const info = (message, data) => {
+const infoLegacy = (message, data) => {
   if (currentLogLevel <= LogLevel.INFO) {
     const logEntry = addToHistory('info', message, data);
     console.info(`[INFO] ${logEntry.timestamp} - ${message}`, data || '');
   }
 };
 
-const warn = (message, data) => {
+const warnLegacy = (message, data) => {
   if (currentLogLevel <= LogLevel.WARN) {
     const logEntry = addToHistory('warn', message, data);
     console.warn(`[WARN] ${logEntry.timestamp} - ${message}`, data || '');
   }
 };
 
-const error = (message, data) => {
+const errorLegacy = (message, data) => {
   if (currentLogLevel <= LogLevel.ERROR) {
     const logEntry = addToHistory('error', message, data);
     console.error(`[ERROR] ${logEntry.timestamp} - ${message}`, data || '');
@@ -138,10 +138,109 @@ const logger = {
   getLogHistory,
   clearLogHistory,
   sendLogsToServer,
-  debug,
-  info,
-  warn,
-  error
+  debug: debugLegacy,
+  info: infoLegacy,
+  warn: warnLegacy,
+  error: errorLegacy
 };
 
 export default logger;
+
+// 简易前端日志模块：支持级别、HTTP请求事件、持久化到 localStorage
+
+const MAX_EVENTS = 300;
+let level = "debug"; // debug | info | warn | error
+let persist = true;
+const events = [];
+
+function nowIso() {
+  try {
+    return new Date().toISOString();
+  } catch {
+    return String(Date.now());
+  }
+}
+
+function should(levelName) {
+  const order = ["debug", "info", "warn", "error"];
+  return order.indexOf(levelName) >= order.indexOf(level);
+}
+
+function push(event) {
+  events.push(event);
+  while (events.length > MAX_EVENTS) events.shift();
+
+  if (persist) {
+    try {
+      localStorage.setItem("app_logs", JSON.stringify(events));
+    } catch {}
+  }
+
+  try {
+    const head = `[${event.ts}] ${event.level.toUpperCase()} ${event.type}: ${event.message}`;
+    const data = event.data || {};
+    if (event.level === "error") console.error(head, data);
+    else if (event.level === "warn") console.warn(head, data);
+    else console.log(head, data);
+  } catch {}
+}
+
+export function setLevel(lvl) {
+  if (["debug", "info", "warn", "error"].includes(lvl)) level = lvl;
+}
+
+export function setPersist(on) {
+  persist = !!on;
+}
+
+export function emit(type, lvl, msg, data) {
+  if (!should(lvl)) return;
+  push({ ts: nowIso(), type, level: lvl, message: msg, data });
+}
+
+export function debug(msg, data) { emit("log", "debug", msg, data); }
+export function info(msg, data) { emit("log", "info", msg, data); }
+export function warn(msg, data) { emit("log", "warn", msg, data); }
+export function error(msg, data) { emit("log", "error", msg, data); }
+
+export function httpStart(info) {
+  const t0 = (typeof performance !== "undefined" ? performance.now() : Date.now());
+  emit("http", "debug", "HTTP request start", info);
+  return { t0, info };
+}
+
+export function httpEnd(ctx, res) {
+  const t1 = (typeof performance !== "undefined" ? performance.now() : Date.now());
+  const durationMs = Math.round(t1 - ctx.t0);
+  emit("http", "info", "HTTP request end", { ...ctx.info, ...res, durationMs });
+}
+
+export function httpError(ctx, err) {
+  const t1 = (typeof performance !== "undefined" ? performance.now() : Date.now());
+  const durationMs = Math.round(t1 - ctx.t0);
+  emit("http", "error", "HTTP request error", {
+    ...ctx.info,
+    error: err?.message || String(err),
+    durationMs,
+  });
+}
+
+export function getEvents() { return [...events]; }
+export function clearEvents() {
+  events.length = 0;
+  try { localStorage.removeItem("app_logs"); } catch {}
+}
+
+export function loadPersisted() {
+  try {
+    const raw = localStorage.getItem("app_logs");
+    if (!raw) return;
+    const arr = JSON.parse(raw);
+    if (Array.isArray(arr)) {
+      events.splice(0, events.length, ...arr.slice(-MAX_EVENTS));
+    }
+  } catch {}
+}
+
+// 初始化：加载历史日志（刷新后也能看）
+loadPersisted();

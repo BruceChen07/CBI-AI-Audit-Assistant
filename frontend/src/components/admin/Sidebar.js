@@ -26,6 +26,7 @@
 export default function Sidebar({ active = "access", onSelect = () => {} }) {
     const items = [
         { key: "access", label: "Access Management" },
+        { key: "model", label: "Model Management" },
         { key: "config", label: "Configuration Management" },
         { key: "cost", label: "Cost Management" },
     ];

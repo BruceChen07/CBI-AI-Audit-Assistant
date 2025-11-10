@@ -2,23 +2,25 @@
 .DS_Store
 Thumbs.db
 
-# Python
+# Python virtual env and caches
 .venv/
 venv/
 __pycache__/
 *.pyc
 *.pyo
 *.pyd
-*.log
 .cache/
 .mypy_cache/
 .pytest_cache/
+
+# Logs
+*.log
+src/logs/
 
 # Node/React
 frontend/node_modules/
 frontend/build/
 frontend/.cache/
-frontend/*.log
 frontend/.eslintcache
 
 # Build/Dist
@@ -27,15 +29,30 @@ build/
 build/hackathon-app/
 dist/hackathon-app/
 
-# App data / local DB / vectors / logs
+# App data / local DB / vectors
 src/auth_users.db
 src/chroma_db/
-src/logs/
-src/token/*.txt
 
-# Mapping (保留 CSV，忽略私有/大型二进制)
+# Mapping (keep CSV, ignore private spreadsheets)
 mapping/*.xlsx
 
-# Env
+# Secrets and environment
 .env
 frontend/.env
+
+# Local models and caches
+models/
+models/.lock/
+models/._____temp/
+
+# Private datasets / docs
+sampledata/
+
+# Tokens
+token/
+src/token/
+src/auth_users.db
+
+# Node.js dependencies and build output
+frontend/node_modules/
+frontend/build/

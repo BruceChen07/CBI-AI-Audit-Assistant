@@ -32,6 +32,7 @@ export const controlStyle = {
   fontSize: "14px",
   backgroundColor: "#ffffff",
   transition: "border-color 0.2s",
+  boxSizing: "border-box",
 };
 
 // Label styles

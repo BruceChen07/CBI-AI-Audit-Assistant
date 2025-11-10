@@ -31,8 +31,9 @@ import Sidebar from "./Sidebar";
 import AdminUsersPage from "./AdminUsersPage";
 import AdminConfigPage from "./AdminConfigPage";
 import AdminMetricsPage from "./AdminMetricsPage";
+import AdminKeywordConfigPage from "./AdminKeywordConfigPage";
 
-export default function AdminPanelPage() {
+function AdminPanelPage() {
   const role = auth.getRole?.();
   const loggedIn = auth.isLoggedIn?.();
   const username = auth.getUsername?.() || "Admin";
@@ -51,22 +52,32 @@ export default function AdminPanelPage() {
   // Left-side three-section state: "access" | "config" | "cost"
   const [activeSection, setActiveSection] = useState("access");
 
-  // Optional: read initial section from URL (?section=config / cost / access)
+  // 初始化：从哈希读取 ?section= 参数，并确保哈希路由在 admin-panel
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const hash = window.location.hash || "#/admin-panel";
+    const [pathPart, qs] = hash.slice(1).split("?");
+    const params = new URLSearchParams(qs || "");
     const fromUrl = params.get("section");
-    if (fromUrl === "access" || fromUrl === "config" || fromUrl === "cost") {
+    if (fromUrl === "access" || fromUrl === "model" || fromUrl === "config" || fromUrl === "cost") {
       setActiveSection(fromUrl);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    // 若不是 admin-panel 路由，则纠正为 admin-panel，保留原查询参数
+    if (`#/${pathPart || ""}` !== "#/admin-panel") {
+      const newHash = `#/admin-panel${qs ? `?${qs}` : ""}`;
+      window.location.hash = newHash;
+    }
   }, []);
 
-  // Optional: sync section to URL on change for refresh persistence
+  // 同步：当 activeSection 变化时，把 section 写进哈希，刷新即可停留在当前页
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
+    const hash = window.location.hash || "#/admin-panel";
+    const [, qs] = hash.slice(1).split("?");
+    const params = new URLSearchParams(qs || "");
     params.set("section", activeSection);
-    const url = `${window.location.pathname}?${params.toString()}`;
-    window.history.replaceState(null, "", url);
+    const newHash = `#/admin-panel?${params.toString()}`;
+    if (window.location.hash !== newHash) {
+      window.location.hash = newHash;
+    }
   }, [activeSection]);
 
   const noAccess = !loggedIn || role !== "admin";
@@ -81,7 +92,8 @@ export default function AdminPanelPage() {
         ) : (
           <div style={{ flex: 1, paddingTop: 12 }}>
             {activeSection === "access" && <AdminUsersPage />}
-            {activeSection === "config" && <AdminConfigPage />}
+            {activeSection === "model" && <AdminConfigPage />}
+            {activeSection === "config" && <AdminKeywordConfigPage />}
             {activeSection === "cost" && <AdminMetricsPage />}
           </div>
         )}
@@ -89,3 +101,5 @@ export default function AdminPanelPage() {
     </div>
   );
 }
+// Add missing default export for index.js default import
+export default AdminPanelPage;

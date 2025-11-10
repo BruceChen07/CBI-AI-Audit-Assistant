@@ -35,6 +35,7 @@ from rag_service import process_pdf
 from openpyxl.styles import Font, PatternFill, Alignment
 from openpyxl.styles.differential import DifferentialStyle
 from openpyxl.formatting.rule import Rule
+from openpyxl.styles.colors import Color
 
 logger = logging.getLogger(__name__)
 
@@ -151,29 +152,106 @@ class FileService:
                     adjusted_width = min(max_length + 2, 50)
                     worksheet.column_dimensions[column_letter].width = adjusted_width
 
-                # === Keyword highlighting: mark cells containing "Finding" in red (case-insensitive) ===
-                highlight_columns = ["Evidence Collected by AI", "AET Evidence Collected by AI"]
-                # Build a mapping of target column letters
-                col_letters = {}
-                for idx, col_name in enumerate(df.columns, start=1):
-                    if col_name in highlight_columns:
-                        col_letters[col_name] = worksheet.cell(row=1, column=idx).column_letter
+                # === Keyword highlighting: apply user-defined keywords/colors from admin config ===
+                # Load keyword configs from admin config storage
+                try:
+                    import auth as _auth
+                    keyword_items = _auth.get_keyword_configs()  # [{'keyword': 'Findings', 'color': '#FF0000'}, ...]
+                except Exception:
+                    keyword_items = []
 
-                last_row = len(df) + 1
-                for col_name, col_letter in col_letters.items():
-                    cell_range = f"{col_letter}2:{col_letter}{last_row}"
-                    # 使用 containsText 规则，大小写不敏感（Excel 内部用 SEARCH）
-                    rule = Rule(type="containsText", operator="containsText", text="Finding")
-                    rule.dxf = DifferentialStyle(font=Font(color="FF0000"))  # 红色字体
-                    worksheet.conditional_formatting.add(cell_range, rule)
-                # === End keyword highlighting ===
-            
+                # 富文本能力检查（不支持则报错）
+                try:
+                    from openpyxl.cell.rich_text import TextBlock, CellRichText
+                    from openpyxl.cell.text import InlineFont
+                except Exception as e:
+                    raise RuntimeError("openpyxl>=3.1 且需支持 openpyxl.cell.rich_text 才能进行片段高亮") from e
+
+                import re
+
+                def _sanitize_hex(c: str) -> str:
+                    s = str(c or "").strip().upper()
+                    if s.startswith("#"):
+                        s = s[1:]
+                    return s if len(s) == 6 else "FF0000"
+
+                # 构建忽略大小写的 keyword->color 映射与联合正则（长词优先）
+                keyword_map: dict[str, str] = {}
+                for it in keyword_items or []:
+                    kw = str((it or {}).get("keyword", "")).strip()
+                    color_hex = _sanitize_hex((it or {}).get("color", "FF0000"))
+                    if kw:
+                        keyword_map[kw.lower()] = color_hex
+
+                pattern = None
+                if keyword_map:
+                    keys_sorted = sorted(keyword_map.keys(), key=len, reverse=True)
+                    pattern = re.compile("|".join(map(re.escape, keys_sorted)), re.IGNORECASE)
+
+                def _to_inline_font(cell_font) -> InlineFont:
+                    # 修复：不使用未定义变量 f，不向构造函数传递不支持的 name 参数
+                    base = cell_font
+                    inline = InlineFont()
+                    inline.sz = getattr(base, "sz", None) or getattr(base, "size", None) or 11
+                    inline.b = bool(getattr(base, "bold", False))
+                    inline.i = bool(getattr(base, "italic", False))
+                    u_raw = getattr(base, "underline", None)
+                    if isinstance(u_raw, bool):
+                        inline.u = "single" if u_raw else "none"
+                    elif not u_raw:
+                        inline.u = "none"
+                    else:
+                        inline.u = str(u_raw).lower()
+                    inline.strike = bool(getattr(base, "strike", False))
+                    return inline
+
+                def _clone_inline_font(f: InlineFont) -> InlineFont:
+                    # 保留基础样式；不复制颜色到普通片段
+                    g = InlineFont()
+                    g.sz = getattr(f, "sz", None)
+                    g.b = getattr(f, "b", None)
+                    g.i = getattr(f, "i", None)
+                    g.u = getattr(f, "u", None)
+                    g.strike = getattr(f, "strike", None)
+                    return g
+
+                # 应用关键字高亮到所有数据行
+                if pattern:
+                    for row_idx in range(2, len(df) + 2):  # 从第2行开始（跳过表头）
+                        for col_idx, col_name in enumerate(df.columns, 1):
+                            cell = worksheet.cell(row=row_idx, column=col_idx)
+                            cell_value = str(cell.value or "")
+                            
+                            if cell_value and pattern.search(cell_value):
+                                # 找到匹配的关键字，应用富文本高亮
+                                blocks = []
+                                last_end = 0
+                                
+                                for match in pattern.finditer(cell_value):
+                                    # 添加匹配前的普通文本
+                                    if match.start() > last_end:
+                                        normal_text = cell_value[last_end:match.start()]
+                                        blocks.append(TextBlock(_to_inline_font(cell.font), normal_text))
+                                    
+                                    # 添加高亮的关键字
+                                    keyword = match.group().lower()
+                                    color_hex = keyword_map.get(keyword, "FF0000")
+                                    highlight_font = _clone_inline_font(_to_inline_font(cell.font))
+                                    highlight_font.color = Color(rgb=color_hex)
+                                    blocks.append(TextBlock(highlight_font, match.group()))
+                                    
+                                    last_end = match.end()
+                                
+                                # 添加剩余的普通文本
+                                if last_end < len(cell_value):
+                                    remaining_text = cell_value[last_end:]
+                                    blocks.append(TextBlock(_to_inline_font(cell.font), remaining_text))
+                                
+                                # 应用富文本到单元格
+                                if blocks:
+                                    cell.value = CellRichText(blocks)
+
             logger.info(f"Excel file generated successfully: {temp_file_path}")
-            
-            # Log statistics information
-            if statistics:
-                logger.info(f"Processing statistics: Total={statistics.get('total', 0)}, Success={statistics.get('success', 0)}, Failed={statistics.get('failed', 0)}")
-            
             return temp_file_path
             
         except Exception as e:

@@ -41,10 +41,55 @@ import re
 os.environ['DISABLE_TELEMETRY'] = 'true'
 os.environ["CHROMA_TELEMETRY_DISABLED"] = "true"
 
+# load config from .env
+try:
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+    load_dotenv(os.path.join(project_root, ".env"), override=False)
+except Exception:
+    pass
 logger = logging.getLogger(__name__)
 
-# Define the embedding models
-EMBEDDING_MODEL = "BAAI/bge-small-en-v1.5"
+# Define the embedding models (provider + fallback to local)
+EMBEDDING_PROVIDER = os.environ.get("EMBEDDING_PROVIDER", "local").lower()
+EMBEDDING_HF_ID = os.environ.get("EMBEDDING_HF_ID", "BAAI/bge-small-en-v1.5")
+EMBEDDING_MS_ID = os.environ.get("EMBEDDING_MS_ID", "AI-ModelScope/bge-small-en-v1.5")
+
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+EMBEDDING_LOCAL_DIR = os.environ.get(
+    "EMBEDDING_LOCAL_DIR",
+    os.path.join(project_root, "models", "AI-ModelScope", "bge-small-en-v1___5"),
+)
+
+def resolve_embedding_model() -> str:
+    try:
+        if EMBEDDING_PROVIDER == "local":
+            if os.path.isdir(EMBEDDING_LOCAL_DIR):
+                logger.info(f"Using local embedding model: {EMBEDDING_LOCAL_DIR}")
+                return EMBEDDING_LOCAL_DIR
+            raise FileNotFoundError(f"Local embedding dir not found: {EMBEDDING_LOCAL_DIR}")
+
+        if EMBEDDING_PROVIDER == "modelscope":
+            try:
+                from modelscope.hub.snapshot_download import snapshot_download
+            except Exception as e:
+                logger.warning(f"ModelScope not available: {e}. Falling back to local/HF.")
+            else:
+                cache_dir = os.path.join(project_root, "models")
+                os.makedirs(cache_dir, exist_ok=True)
+                model_dir = snapshot_download(EMBEDDING_MS_ID, cache_dir=cache_dir)
+                logger.info(f"ModelScope model ready at: {model_dir}")
+                return model_dir
+
+        logger.info(f"Using HF embedding model id: {EMBEDDING_HF_ID}")
+        return EMBEDDING_HF_ID
+    except Exception as e:
+        logger.error(f"Resolve embedding model failed: {e}", exc_info=True)
+        if os.path.isdir(EMBEDDING_LOCAL_DIR):
+            logger.info(f"Falling back to local embedding at {EMBEDDING_LOCAL_DIR}")
+            return EMBEDDING_LOCAL_DIR
+        return EMBEDDING_HF_ID
+
+EMBEDDING_MODEL = resolve_embedding_model()
 BATCH_SIZE = 100  # Batch insert size for improved write performance
 
 # LLM configuration
@@ -52,6 +97,10 @@ MAX_AI_URL = os.environ.get("MAX_AI_URL", "")
 MAX_API_KEY = os.environ.get("MAX_API_KEY", "")
 MAX_AI_MODEL = os.environ.get("MAX_AI_MODEL", "GPT-4.1")
 TEMPERATURE = float(os.environ.get("AI_TEMPERATURE", "0.2") or 0.2)
+
+# print environment variables
+logger.info(f"[env] MAX_AI_URL = {MAX_AI_URL or '(empty)'}")
+logger.info(f"[env] MAX_API_KEY = {'(set)' if MAX_API_KEY else '(empty)'}")
 
 if not MAX_AI_URL or not MAX_API_KEY:
     logger.warning("MAX_AI_URL/MAX_API_KEY not set; please configure environment variables in .env")
@@ -394,7 +443,7 @@ General Requirements:
 4. Keep answers accurate, concise, and well-organized.
 
 Tone and Style Policy:
-1. Audience: supplier audit professionals; use a formal, objective, compliance-oriented tone suitable for audit reports.
+1. Audience: supplier audit professionals; use a formal, objectivetype_specific, compliance-oriented tone suitable for audit reports.
 2. Start directly with findings; avoid conversational openers such as "Certainly", "Sure", "Of course", "Absolutely", "好的", "没问题", "当然".
 3. No greetings, exclamation marks, emojis, marketing language, or chitchat.
 4. Prefer neutral, impersonal phrasing; avoid first/second-person.
@@ -415,7 +464,7 @@ Document Content:
 Question: {query}
 
 Provide a detailed answer only. Do NOT include any inline references or page numbers in the answer (no "Reference:" sections). 
-Use a formal, objective tone suitable for audit reports. Start directly with the findings.
+Use a formal, objectivetype_specific, compliance-oriented tone suitable for audit reports. Start directly with the findings.
 Avoid any conversational openers (e.g., "Certainly", "Sure", "Of course", "好的", "当然") and do not include greetings or exclamation marks.
 """)
         

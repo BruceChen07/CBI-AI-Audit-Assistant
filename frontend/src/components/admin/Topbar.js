@@ -24,21 +24,39 @@
  */
 
 export default function Topbar({ username, loading, error }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        marginBottom: 16,
-      }}
-    >
-      <div>
-        <h1 style={{ margin: 0, fontSize: 20, fontWeight: 700 }}>Reviews</h1>
-        <div style={{ color: "#64748b", fontSize: 12 }}>
-          Welcome back, {username}{loading ? " · Loading…" : ""}{error ? " · Load failed" : ""}
+    return (
+        <div
+            style={{
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "space-between",
+                marginBottom: 16,
+            }}
+        >
+            <div>
+                <h1 style={{ margin: 0, fontSize: 20, fontWeight: 700 }}>Reviews</h1>
+                <div style={{ color: "#64748b", fontSize: 12 }}>
+                    Welcome back, {username}{loading ? " · Loading…" : ""}{error ? " · Load failed" : ""}
+                </div>
+            </div>
+            {/* 新增：返回首页按钮 */}
+            <button
+                onClick={() => {
+                    // 使用哈希路由跳转到首页，保持登录态
+                    window.location.hash = "#/";
+                }}
+                style={{
+                    padding: "6px 12px",
+                    borderRadius: 8,
+                    background: "#e2e8f0",
+                    color: "#1f2937",
+                    border: "1px solid #cbd5e1",
+                    cursor: "pointer",
+                }}
+                title="Home"
+            >
+                return to home page
+            </button>
         </div>
-      </div>
-    </div>
-  );
+    );
 }

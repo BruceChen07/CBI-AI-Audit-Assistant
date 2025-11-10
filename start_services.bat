@@ -13,54 +13,55 @@ set BACKEND_DIR=src
 
 :start
 cls
-echo 正在启动服务...
+echo starting services...
 echo.
+echo [env] MAX_AI_URL=%MAX_AI_URL%
+echo [env] MAX_API_KEY=%MAX_API_KEY%
 
-:: 启动后端服务
-echo [1/2] 启动后端服务...
-start cmd /k "cd %BACKEND_DIR% && python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload"
+:: start backend service
+echo [1/2] starting backend service...
+start cmd /k "cd %BACKEND_DIR% && set MAX_AI_URL=%MAX_AI_URL% && set MAX_API_KEY=%MAX_API_KEY% && python -m uvicorn main:app --host 0.0.0.0 --port 8000 --reload --env-file ..\.env"
 
-:: 等待2秒确保后端启动
+:: wait 2 seconds to ensure backend service is started
 timeout /t 2 /nobreak > nul
 
-:: 启动前端服务
-echo [2/2] 启动前端服务...
+:: start frontend service
+echo [2/2] starting frontend service...
 start cmd /k "cd %FRONTEND_DIR% && npm start"
 
 echo.
-echo 所有服务已启动！
+echo all services started!
 echo.
-echo 后端API: http://localhost:8000
-echo 前端页面: http://localhost:3000
+echo backend api: http://localhost:8000
+echo frontend page: http://localhost:3000
 echo.
-echo 按 R 重启所有服务
-echo 按 Q 退出
+echo press R to restart all services
+echo press Q to exit
 echo.
 
 :choice
-choice /c RQ /n /m "请选择操作: "
+choice /c RQ /n /m "Please select an operation: "
 
 if errorlevel 2 goto end
 if errorlevel 1 goto restart
 
 :restart
 echo.
-echo 正在重启所有服务...
+echo restarting all services...
 
-:: 关闭所有相关的命令行窗口
-echo 关闭现有服务...
+echo closing all related command line windows...
 taskkill /f /im cmd.exe /fi "windowtitle eq *npm*" > nul 2>&1
 taskkill /f /im cmd.exe /fi "windowtitle eq *uvicorn*" > nul 2>&1
 
-:: 等待2秒确保所有进程都已关闭
+:: wait 2 seconds to ensure all processes are closed
 timeout /t 2 /nobreak > nul
 
-:: 重新启动服务
+:: restart services
 goto start
 
 :end
 echo.
-echo 正在关闭所有服务...
+echo closing all services...
 taskkill /f /im cmd.exe /fi "windowtitle eq *npm*" > nul 2>&1
 taskkill /f /im cmd.exe /fi "windowtitle eq *uvicorn*" > nul 2>&1
-echo 所有服务已关闭！
+echo all services closed!

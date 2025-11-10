@@ -27,6 +27,7 @@
 // Added: token auto-refresh hooks and 401 interception
 
 import { getToken, saveAuth, logout, willExpireSoon, getTokenPayload } from "./auth";
+import * as logger from "./logger";
 
 const DEFAULT_BASE =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:8000";
@@ -86,6 +87,7 @@ async function runRefresherOnce(oldToken) {
 export async function apiFetch(path, options = {}, attachAuth = true) {
   const base = DEFAULT_BASE.replace(/\/+$/, "");
   const url = `${base}${path.startsWith("/") ? path : `/${path}`}`;
+  const method = String(options.method || "GET").toUpperCase();
 
   let headers = new Headers(options.headers || {});
   if (!headers.has("Content-Type")) {
@@ -94,17 +96,24 @@ export async function apiFetch(path, options = {}, attachAuth = true) {
 
   const isRefreshEndpoint =
     path === "/auth/refresh" || String(path).endsWith("/auth/refresh");
-  // 1) Preflight refresh if token is close to expiry
   let token = getToken();
   if (attachAuth && token && !isRefreshEndpoint) {
     if (willExpireSoon(60)) {
+      logger.info("Token close to expiry, attempting refresh preflight", { path, method });
       const refreshed = await runRefresherOnce(token);
-      if (refreshed) {
-        token = refreshed;
-      }
+      if (refreshed) token = refreshed;
     }
     headers.set("Authorization", `Bearer ${token}`);
   }
+
+  const ctx = logger.httpStart({
+    url,
+    path,
+    method,
+    attachAuth,
+    hasAuthHeader: headers.has("Authorization"),
+    tokenPresent: !!token,
+  });
 
   const doFetch = async () => {
     const resp = await fetch(url, { ...options, headers });
@@ -118,11 +127,10 @@ export async function apiFetch(path, options = {}, attachAuth = true) {
     return { resp, data };
   };
 
-  // 2) First attempt
   let { resp, data } = await doFetch();
 
-  // 3) On 401: try refresh once, then retry
   if (resp.status === 401 && attachAuth && !isRefreshEndpoint) {
+    logger.warn("Received 401, trying token refresh and retry", { path, method });
     const old = token;
     const refreshed = await runRefresherOnce(old);
     if (refreshed) {
@@ -131,12 +139,11 @@ export async function apiFetch(path, options = {}, attachAuth = true) {
     }
   }
 
-  // 4) Handle response
   if (!resp.ok) {
     if (resp.status === 401) {
-      // Only perform a hard logout when it's NOT a refresh request and attachAuth=true
       if (attachAuth && !isRefreshEndpoint) {
         logout();
+        logger.warn("Unauthorized, performed hard logout", { path, method });
       }
       const message =
         (data && (data.detail || data.message)) ||
@@ -144,6 +151,7 @@ export async function apiFetch(path, options = {}, attachAuth = true) {
       const err = new Error(message);
       err.status = resp.status;
       err.data = data;
+      logger.httpError(ctx, err);
       throw err;
     }
     const message =
@@ -152,8 +160,10 @@ export async function apiFetch(path, options = {}, attachAuth = true) {
     const err = new Error(message);
     err.status = resp.status;
     err.data = data;
+    logger.httpError(ctx, err);
     throw err;
   }
 
+  logger.httpEnd(ctx, { status: resp.status, ok: true });
   return data;
 }

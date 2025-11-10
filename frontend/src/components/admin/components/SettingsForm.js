@@ -73,7 +73,8 @@ export default function SettingsForm({
             body: JSON.stringify({ model: name }),
         });
         if (res.ok) {
-            if (typeof onSave === 'function') onSave();
+            // refresh config
+            if (typeof onReload === 'function') onReload();
         }
     };
 
@@ -99,7 +100,7 @@ export default function SettingsForm({
 
     return (
         <div style={{ marginBottom: 24 }}>
-            <h3 style={{ marginBottom: 16, color: "#1a202c" }}>Settings</h3>
+            <h3 style={{ marginBottom: 16, color: "#1a202c" }}>Model Management</h3>
             {/* Omitted: top banner rendering */}
             <form onSubmit={handleSubmit} style={{ display: "grid", gap: 12, maxWidth: 500 }}>
                 <label style={{ textAlign: "left" }}>
@@ -151,9 +152,35 @@ export default function SettingsForm({
                 {/* Omitted: button section */}
             </form>
             <div style={controlStyle}>
-                <label style={labelStyle}>Custom Model Name</label>
-                <input type="text" value={customModel} onChange={e => setCustomModel(e.target.value)} placeholder="e.g. GPT-4.1-custom" />
-                <button style={btnSecondary} onClick={applyCustomModel}>Use This Model</button>
+                <label style={labelStyle}>Select Model</label>
+                {Array.isArray(modelOptions) && modelOptions.length > 0 ? (
+                    <select
+                        value={customModel}
+                        onChange={e => setCustomModel(e.target.value)}
+                        disabled={busy || loading}
+                        style={controlStyle}
+                    >
+                        <option value="">请选择模型</option>
+                        {modelOptions.map(m => (
+                            <option key={m} value={m}>{m}</option>
+                        ))}
+                    </select>
+                ) : (
+                    <input
+                        type="text"
+                        value={customModel}
+                        onChange={e => setCustomModel(e.target.value)}
+                        placeholder="e.g. GPT-4.1-custom"
+                        disabled={busy || loading}
+                    />
+                )}
+                <button
+                    style={btnSecondary}
+                    onClick={applyCustomModel}
+                    disabled={busy || loading || !customModel}
+                >
+                    Use This Model
+                </button>
             </div>
         </div>
     );

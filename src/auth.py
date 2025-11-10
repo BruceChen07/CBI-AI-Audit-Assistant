@@ -320,7 +320,53 @@ def get_signup_whitelist() -> list[str]:
     items = [s.strip() for s in raw.split(",")]
     return [s.lower() for s in items if s]
 
-# 顶层新增函数（与 get_config/update_config 同级）
+def get_keyword_configs() -> List[Dict[str, str]]:
+    with _get_db() as conn:
+        row = conn.execute("SELECT value FROM config WHERE key = ?", ("keyword_color_configs",)).fetchone()
+    if not row:
+        return []
+    try:
+        raw = row["value"] if isinstance(row, sqlite3.Row) else row[0]
+        items = json.loads(raw) if raw else []
+    except Exception:
+        items = []
+    # sanitize shape: [{'keyword': str, 'color': '#RRGGBB'}]
+    sanitized: List[Dict[str, str]] = []
+    for it in items or []:
+        kw = str((it or {}).get("keyword", "")).strip()
+        color = str((it or {}).get("color", "#FF0000")).strip()
+        if kw:
+            if not color.startswith("#"):
+                color = f"#{color}"
+            if len(color) != 7:
+                color = "#FF0000"
+            sanitized.append({"keyword": kw, "color": color.upper()})
+    return sanitized
+
+def update_keyword_configs(items: List[Dict[str, Any]]) -> List[Dict[str, str]]:
+    # persist as JSON array of {keyword, color}
+    cleaned: List[Dict[str, str]] = []
+    for it in items or []:
+        kw = str((it or {}).get("keyword", "")).strip()
+        color = str((it or {}).get("color", "#FF0000")).strip()
+        if kw:
+            if not color.startswith("#"):
+                color = f"#{color}"
+            if len(color) != 7:
+                color = "#FF0000"
+            cleaned.append({"keyword": kw, "color": color.upper()})
+    with _get_db() as conn:
+        conn.execute(
+            """
+            INSERT INTO config (key, value, updated_at)
+            VALUES (?, ?, datetime('now'))
+            ON CONFLICT(key) DO UPDATE SET value=excluded.value, updated_at=excluded.updated_at
+            """,
+            ("keyword_color_configs", json.dumps(cleaned, ensure_ascii=False)),
+        )
+        conn.commit()
+    return cleaned
+
 def get_prompts() -> Dict[str, Any]:
     with _get_db() as conn:
         rows = conn.execute(
