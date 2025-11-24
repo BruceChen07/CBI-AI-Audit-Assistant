@@ -39,6 +39,8 @@ import os
 import webbrowser
 import threading
 import time
+from fastapi.routing import APIRoute
+from starlette.routing import Mount
 
 # Setup logging
 logger = setup_logging()
@@ -167,10 +169,6 @@ def open_browser():
     """Delay opening the browser"""
     time.sleep(2)  # Wait for server to start
     webbrowser.open('http://localhost:8000')
-
-# add route type imports for safe logging
-from fastapi.routing import APIRoute
-from starlette.routing import Mount
 
 if __name__ == "__main__":
     logger.info("Starting application server")
